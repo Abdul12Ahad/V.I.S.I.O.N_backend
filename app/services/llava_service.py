@@ -4,18 +4,24 @@ import ollama
 def analyze_with_llava(image_path: str):
 
     prompt = """
-You are an educational AI assistant.
+    Analyze the image.
 
-Analyze the uploaded image and provide:
+    Return ONLY valid JSON.
 
-1. Description
-2. What the object is
-3. How it works
-4. Why it is important
-5. One fun fact
+    {
+        "description":"",
+        "what_it_is":"",
+        "how_it_works":"",
+        "why_important":"",
+        "fun_fact":"",
+        "key_concepts":[],
+        "related_topics":[],
+        "learn_more":[]
+    }
 
-Keep the explanation beginner-friendly.
-"""
+    Keep explanations beginner friendly.
+    Do not return any text outside JSON.
+    """
 
     response = ollama.chat(
         model="llava:7b",

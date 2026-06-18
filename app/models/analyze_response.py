@@ -1,9 +1,16 @@
 from pydantic import BaseModel
 
-
 class AnalyzeResponse(BaseModel):
 
-    analysis: str
+    description: str
+    what_it_is: str
+    how_it_works: str
+    why_important: str
+    fun_fact: str
+
+    key_concepts: list[str]
+    related_topics: list[str]
+    learn_more: list[str]
 
     category: str
 
