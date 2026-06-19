@@ -35,3 +35,34 @@ def analyze_with_llava(image_path: str):
     )
 
     return response["message"]["content"]
+
+def answer_followup_question(
+        context: str,
+        question: str
+    ):
+
+    prompt = f"""
+    You are an educational assistant.
+
+    Context:
+
+    {context}
+
+    User Question:
+
+    {question}
+
+    Answer clearly and simply.
+    """
+
+    response = ollama.chat(
+        model="llava:7b",
+        messages=[
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ]
+    )
+
+    return response["message"]["content"]
