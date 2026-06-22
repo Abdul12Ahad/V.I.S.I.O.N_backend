@@ -1,6 +1,7 @@
 from fastapi import APIRouter, UploadFile, File
 from app.services.vision_service import analyze_uploaded_image
 from app.models.analyze_response import AnalyzeResponse
+from app.database import save_analysis
 
 import os
 import shutil
@@ -59,6 +60,11 @@ async def analyze_image(
 
     result = analyze_uploaded_image(
         file_path
+    )
+
+    save_analysis(
+        file.filename,
+        result
     )
 
     return result
