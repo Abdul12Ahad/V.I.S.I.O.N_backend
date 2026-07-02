@@ -1,14 +1,33 @@
 import ollama
 
 
-def analyze_with_llava(image_path: str):
+def analyze_with_llava(image_path: str, level: str):
 
-    prompt = """
+    prompt = f"""
     Analyze the image.
+
+    The explanation level should be:
+    {level}
+
+    Rules:
+
+    If level is Beginner:
+    - Use simple words.
+    - Explain like you are teaching a school student.
+    - Avoid technical jargon.
+
+    If level is Intermediate:
+    - Use moderate technical terms.
+    - Give balanced explanations.
+
+    If level is Advanced:
+    - Use proper technical terminology.
+    - Give detailed explanations.
+    - Assume the user already understands the basics.
 
     Return ONLY valid JSON.
 
-    {
+    {{
         "description":"",
         "what_it_is":"",
         "how_it_works":"",
@@ -17,10 +36,9 @@ def analyze_with_llava(image_path: str):
         "key_concepts":[],
         "related_topics":[],
         "learn_more":[]
-    }
+    }}
 
-    Keep explanations beginner friendly.
-    Do not return any text outside JSON.
+    Do not return anything outside the JSON.
     """
 
     response = ollama.chat(

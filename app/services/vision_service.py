@@ -7,7 +7,7 @@ from app.services.llava_service import (
 )
 
 
-def analyze_uploaded_image(image_path: str):
+def analyze_uploaded_image(image_path: str, level: str):
 
     image = Image.open(image_path)
 
@@ -21,7 +21,8 @@ def analyze_uploaded_image(image_path: str):
     try:
 
         raw_response = analyze_with_llava(
-            image_path
+            image_path,
+            level
         )
 
         print("\n" + "=" * 50)

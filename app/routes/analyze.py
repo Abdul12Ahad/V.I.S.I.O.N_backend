@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File
 from app.services.vision_service import analyze_uploaded_image
 from app.models.analyze_response import AnalyzeResponse
 from app.database import save_analysis
+from fastapi import Form
 
 import os
 import shutil
@@ -25,7 +26,8 @@ ALLOWED_EXTENSIONS = {
     response_model=AnalyzeResponse
 )
 async def analyze_image(
-    file: UploadFile = File(...)
+    file: UploadFile = File(...),
+    level: str = Form("Beginner")
 ):
 
     extension = os.path.splitext(
@@ -59,7 +61,8 @@ async def analyze_image(
         )
 
     result = analyze_uploaded_image(
-        file_path
+        file_path,
+        level
     )
 
     save_analysis(
