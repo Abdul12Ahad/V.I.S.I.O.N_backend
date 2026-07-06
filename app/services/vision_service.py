@@ -35,16 +35,20 @@ def analyze_uploaded_image(image_path: str, level: str):
 
         json_text = raw_response[start:end]
 
-        analysis = json.loads(
-            json_text
-        )
+        try:
+            analysis = json.loads(json_text)
+        except json.JSONDecodeError:
+            print("Invalid JSON returned by LLaVA")
+            print(json_text)
+            raise
 
     except Exception as e:
 
+        print(e)
+
         analysis = {
 
-            "description":
-                raw_response,
+            "description": str(e),
 
             "what_it_is": "",
 
@@ -52,7 +56,13 @@ def analyze_uploaded_image(image_path: str, level: str):
 
             "why_important": "",
 
-            "fun_fact": ""
+            "fun_fact": "",
+
+            "key_concepts": [],
+
+            "related_topics": [],
+
+            "learn_more": []
         }
 
     return {

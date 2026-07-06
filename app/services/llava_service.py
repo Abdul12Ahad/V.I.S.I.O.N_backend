@@ -1,7 +1,11 @@
 import ollama
 
+import os
 
 def analyze_with_llava(image_path: str, level: str):
+
+    print(image_path)
+    print(os.path.exists(image_path))
 
     prompt = f"""
     Analyze the image.
@@ -27,18 +31,40 @@ def analyze_with_llava(image_path: str, level: str):
 
     Return ONLY valid JSON.
 
+    Follow this JSON schema EXACTLY.
+
     {{
-        "description":"",
-        "what_it_is":"",
-        "how_it_works":"",
-        "why_important":"",
-        "fun_fact":"",
-        "key_concepts":[],
-        "related_topics":[],
-        "learn_more":[]
+        "description": "",
+        "what_it_is": "",
+        "how_it_works": "",
+        "why_important": "",
+        "fun_fact": "",
+        "key_concepts": [],
+        "related_topics": [
+            {{
+                "title": "",
+                "points": []
+            }}
+        ],
+        "learn_more": []
     }}
 
-    Do not return anything outside the JSON.
+    IMPORTANT RULES:
+
+    - description MUST be a string.
+    - what_it_is MUST be a string.
+    - how_it_works MUST be a string.
+    - why_important MUST be a string.
+    - fun_fact MUST be a string.
+    - key_concepts MUST be an array of strings only.
+    - related_topics MUST contain only title and points.
+    - learn_more MUST be an array of strings only.
+    - Do NOT return nested objects for any field except related_topics.
+    - Do NOT include markdown.
+    - Do NOT include ```json.
+    - Do NOT include trailing commas.
+    - Do NOT add extra fields.
+    - Return ONLY the JSON object.
     """
 
     response = ollama.chat(
