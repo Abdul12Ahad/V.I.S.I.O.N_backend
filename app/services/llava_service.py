@@ -2,13 +2,40 @@ import ollama
 
 import os
 
-def analyze_with_llava(image_path: str, level: str):
+def analyze_with_llava(image_path: str, level: str,previous_learning):
 
     print(image_path)
     print(os.path.exists(image_path))
 
+    history_text = ""
+
+    if previous_learning:
+
+        for item in previous_learning:
+            history_text += f"""
+    Description:
+    {item['description']}
+
+    Key Concepts:
+    {", ".join(item['key_concepts'])}
+    """
+
+    else:
+
+        history_text = "No previous learning history."
+
     prompt = f"""
     Analyze the image.
+
+    The user has previously learned these concepts:
+
+    {history_text}
+
+    If the current image is related to anything above:
+
+    - Mention the connection naturally.
+    - Build upon previous knowledge.
+    - Do NOT force connections if unrelated.
 
     The explanation level should be:
     {level}

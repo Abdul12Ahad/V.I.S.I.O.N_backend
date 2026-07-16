@@ -23,3 +23,5 @@ uploads/
 dist/
 build/
 *.egg-info/
+
+vision.db

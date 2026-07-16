@@ -2,10 +2,8 @@ from PIL import Image
 import os
 import json
 
-from app.services.llava_service import (
-    analyze_with_llava
-)
-
+from app.services.llava_service import analyze_with_llava
+from app.database import get_recent_learning
 
 def analyze_uploaded_image(image_path: str, level: str):
 
@@ -20,9 +18,11 @@ def analyze_uploaded_image(image_path: str, level: str):
 
     try:
 
+        previous_learning = get_recent_learning()
         raw_response = analyze_with_llava(
             image_path,
-            level
+            level,
+            previous_learning
         )
 
         print("\n" + "=" * 50)

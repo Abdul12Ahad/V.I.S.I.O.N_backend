@@ -67,6 +67,8 @@ async def analyze_image(
 
     save_analysis(
         file.filename,
+        level,
+        file_path,
         result
     )
 
